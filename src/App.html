@@ -14,7 +14,7 @@
 <div>
 	<h1>Want to play a game?</h1>
 	<label class="custom-file-upload">
-		<input type="file" on:onchange='loadData(event)' />
+		<input type="file" on:change="loadData(event)" />
 		Load
 	</label>
 	<button class="simpleButton" on:click="saveData()">Save</button>
@@ -67,18 +67,35 @@
 				})
 			},
 			loadData(event) {
-				debugger
-				var input = event.target;
-
-				var reader = new FileReader();
-				reader.onload = function () {
-					var text = reader.result;
-					console.log(reader.result.substring(0, 200));
+				let input = event.target;
+				let reader = new FileReader();
+				let showWarning = () => alert("The given data is invalid");
+				reader.onload = () => {
+					let text = reader.result;
+					try {
+						let oData = JSON.parse(text);
+						if (!!oData && oData.filter(x => !!x.player && !!x.boardArray && !!x.id).length > 0) {
+							oData = oData.map(x => { return { id: x.id, player: x.player, boardArray: x.boardArray } })
+							this.set({
+								games: oData,
+								lastBoardId: Math.max(...oData.map(x => x.id))
+							})
+						} else {
+							showWarning();
+						}
+					} catch (error) {
+						showWarning();
+					}
 				};
 				reader.readAsText(input.files[0]);
 			},
 			saveData() {
-
+				let text = JSON.stringify(this.get().games);
+				let a = document.createElement("a");
+				let file = new Blob([text], { type: 'application/json' });
+				a.href = URL.createObjectURL(file);
+				a.download = 'saveGames.json';
+				a.click();
 			}
 		}
 	};
