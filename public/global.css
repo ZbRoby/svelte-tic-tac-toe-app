@@ -1,3 +1,9 @@
+.simpleButton{
+	border: 1px solid #ccc;
+	background: none;
+	cursor: pointer;
+}
+
 html, body {
 	position: relative;
 	width: 100%;

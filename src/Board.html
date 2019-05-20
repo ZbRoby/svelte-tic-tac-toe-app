@@ -1,8 +1,16 @@
 <div class="game">
-    <div class="board">
-        {#if !finish}
-        <h3>Is the turn of Player {player}</h3>
+    <div>
+        <div class="simpleHeader">
+            <h2>Board {boardId}</h2>
+            <button on:click="fire('removeButton',{boardId})">X</button>
+        </div>
+        {#if finish}
+            <h2>{conclusion}</h2>
+        {:else}
+            <h2>Is the turn of Player {player}</h2> 
         {/if}
+    </div>
+    <div class="{(player===1?'oCursor':'xCursor')+' board'}">
         <div>
             <button on:click="playerPress(0,0)">{boardArray[0][0]}</button>
             <button on:click="playerPress(0,1)">{boardArray[0][1]}</button>
@@ -19,12 +27,11 @@
             <button on:click="playerPress(2,2)">{boardArray[2][2]}</button>
         </div>
     </div>
+    <div>
     {#if finish}
-    <span class='score'>
-        <h2>{conclusion}</h2>
-        <button on:click="resetGame()">Reset</button>
-    </span>
+        <button on:click="resetGame()" class="simpleButton">Reset</button>
     {/if}
+    </div>
 </div>
 
 
@@ -33,25 +40,65 @@
         border:black solid 1px;
         align-content: center;
         margin:0.5em;
-    }
-
-    .score{
-        margin:0.5em;
+        padding: 0.5em;
     }
 
     .board{ 
         margin:0.5em;
+        padding: 0.5em;
     }
 
     .board>div>button {
+        width: 2.5em;
+        text-align: center;
+        height: 2.5em;
+        border: none;
+        background: black;
+        color: white;
+        vertical-align: middle;
+    }
+
+    .xCursor *,.xCursor>div>button{
+        cursor: url(img/xCursor.png), auto !important;
+    }
+    
+    .oCursor *,.oCursor>div>button{
+        cursor: url(img/oCursor.png), auto !important;
+    }
+
+    .simpleHeader{
+        justify-content: space-between;
+    }
+    
+    .simpleHeader>*{
+        display: inline;
+    }
+
+    .simpleHeader>button{
         width: 2em;
         text-align: center;
         height: 2em;
+        background: none;
+        font-weight: 900;
+        float:right;
+        border: none;
+        vertical-align: top;
+		cursor: pointer;
     }
+
+    .simpleHeader>button:focus,.simpleHeader>button:hover{
+        text-shadow: 1em;
+        color: rgb(75,75,75);
+    }
+
 </style>
 
 <script>
+
     export default {
+        oncreate() {
+            this._testFinish();
+        },
         data() {
             return {
                 boardArray: [

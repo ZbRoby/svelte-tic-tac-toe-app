@@ -1,11 +1,34 @@
-<h1>Wanna play a game?</h1>
-<Board/>
-<br><Board/>
-<br><Board/>
-<br><Board/>
-<br><Board/>
-<br><Board/>
-<br>
+<style>
+	input[type="file"] {
+		display: none;
+	}
+
+	.custom-file-upload {
+		border: 1px solid #ccc;
+		display: inline-block;
+		padding: 6px 12px;
+		cursor: pointer;
+	}
+</style>
+
+<div>
+	<h1>Want to play a game?</h1>
+	<label class="custom-file-upload">
+		<input type="file" on:onchange='loadData(event)' />
+		Load
+	</label>
+	<button class="simpleButton" on:click="saveData()">Save</button>
+</div>
+
+{#if games.length==0}
+	<h4>No game initiated</h4>
+{:else}
+	<h4>There are {games.length} games initiated</h4>
+	{#each games as game}	
+		<Board boardId="{game.id}" bind:boardArray="game.boardArray" bind:player="game.player"  on:removeButton="removeElement(event.boardId)"/>	
+	{/each}
+{/if}
+<button class="simpleButton" on:click="addNewGame()">+</button>
 
 <script>
 	import Board from './Board.html';
@@ -13,6 +36,50 @@
 	export default {
 		components: {
 			Board
+		},
+		data() {
+			return {
+				games: [],
+				lastBoardId: 0
+			}
+		},
+		methods: {
+			addNewGame() {
+				let oldGames = this.get().games;
+				let newLastBoardId = this.get().lastBoardId + 1
+				this.set({
+					games: [...oldGames, {
+						id: newLastBoardId,
+						boardArray: [
+							['', '', ''],
+							['', '', ''],
+							['', '', '']
+						],
+						player: 1
+					}],
+					lastBoardId: newLastBoardId
+				})
+			},
+			removeElement(removeId) {
+				let oldGames = this.get().games;
+				this.set({
+					games: [...oldGames].filter(x => x.id !== removeId)
+				})
+			},
+			loadData(event) {
+				debugger
+				var input = event.target;
+
+				var reader = new FileReader();
+				reader.onload = function () {
+					var text = reader.result;
+					console.log(reader.result.substring(0, 200));
+				};
+				reader.readAsText(input.files[0]);
+			},
+			saveData() {
+
+			}
 		}
 	};
 </script>
