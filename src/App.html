@@ -4,10 +4,12 @@
 	}
 
 	.custom-file-upload {
-		border: 1px solid #ccc;
 		display: inline-block;
 		padding: 6px 12px;
-		cursor: pointer;
+	}
+
+	.custom-file-upload:hover {
+		color: #292828;
 	}
 </style>
 
@@ -17,7 +19,7 @@
 		<input type="file" on:change="loadData(event)" />
 		Load
 	</label>
-	<button class="simpleButton" on:click="saveData()">Save</button>
+	<button on:click="saveData()">Save</button>
 </div>
 
 {#if games.length==0}
@@ -28,7 +30,7 @@
 		<Board boardId="{game.id}" bind:boardArray="game.boardArray" bind:player="game.player"  on:removeButton="removeElement(event.boardId)"/>	
 	{/each}
 {/if}
-<button class="simpleButton" on:click="addNewGame()">+</button>
+<button on:click="addNewGame()">+</button>
 
 <script>
 	import Board from './Board.html';

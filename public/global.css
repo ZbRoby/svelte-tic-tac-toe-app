@@ -1,8 +1,8 @@
-.simpleButton{
-	border: 1px solid #ccc;
-	background: none;
-	cursor: pointer;
-}
+/* #000000 - BLACK */
+/* #F3E8EE - WHITE */
+/* #54442B - BROWN */
+/* #FF4365 - PINK */
+/* #00D9CC - CYAN */
 
 html, body {
 	position: relative;
@@ -11,7 +11,8 @@ html, body {
 }
 
 body {
-	color: #333;
+	color: #000000;
+	background-color: #F3E8EE;
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
@@ -19,7 +20,7 @@ body {
 }
 
 a {
-	color: rgb(0,100,200);
+	color: #00D9CC;
 	text-decoration: none;
 }
 
@@ -28,25 +29,27 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(0,80,160);
+	color: #FF4365;
 }
 
 label {
 	display: block;
 }
 
-input, button, select, textarea {
+input, button, select, textarea, label {
 	font-family: inherit;
 	font-size: inherit;
 	padding: 0.4em;
 	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
-	border: 1px solid #ccc;
+	border: 1px solid #000000;
+	background: #F3E8EE;
+	cursor: pointer;
 	border-radius: 2px;
 }
 
 input:disabled {
-	color: #ccc;
+	outline: solid;
 }
 
 input[type="range"] {
@@ -54,14 +57,13 @@ input[type="range"] {
 }
 
 button {
-	background-color: #f4f4f4;
 	outline: none;
 }
 
 button:active {
-	background-color: #ddd;
+	background-color: #F3E8EE;
 }
 
-button:focus {
-	border-color: #666;
+button:hover {
+	color: #292828;
 }

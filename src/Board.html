@@ -29,7 +29,7 @@
     </div>
     <div>
     {#if finish}
-        <button on:click="resetGame()" class="simpleButton">Reset</button>
+        <button on:click="resetGame()">Reset</button>
     {/if}
     </div>
 </div>
@@ -78,17 +78,8 @@
         width: 2em;
         text-align: center;
         height: 2em;
-        background: none;
-        font-weight: 900;
         float:right;
-        border: none;
-        vertical-align: top;
-		cursor: pointer;
-    }
-
-    .simpleHeader>button:focus,.simpleHeader>button:hover{
-        text-shadow: 1em;
-        color: rgb(75,75,75);
+        vertical-align: middle;
     }
 
 </style>
